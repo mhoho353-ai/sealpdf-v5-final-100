@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>VideoForge AI</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>VideoForge AI</h1>
+
+            <p>
+                أدوات مستقلة لمعالجة الفيديو والمونتاج.
+            </p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="panel">
+            <h2>رفع الفيديو</h2>
+
+            <form id="upload-form">
+                <label for="video-file">
+                    اختر ملف الفيديو
+                </label>
+
+                <input
+                    id="video-file"
+                    name="video"
+                    type="file"
+                    accept="video/*"
+                    required
+                >
+
+                <button type="submit">
+                    رفع الفيديو
+                </button>
+            </form>
+
+            <div
+                id="upload-status"
+                class="status"
+                role="status"
+                aria-live="polite"
+            ></div>
+        </section>
+
+        <section class="panel">
+            <h2>الأدوات</h2>
+
+            <div class="tools-grid">
+                {% for tool_id, tool in tools.items() %}
+                <article class="tool-card">
+                    <h3>{{ tool.name }}</h3>
+
+                    <p>{{ tool.description }}</p>
+
+                    {% if tool.enabled %}
+                    <button
+                        type="button"
+                        class="tool-button"
+                        data-tool="{{ tool_id }}"
+                    >
+                        فتح الأداة
+                    </button>
+                    {% else %}
+                    <button type="button" disabled>
+                        لم تُنفذ بعد
+                    </button>
+                    {% endif %}
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>نتائج الأداة</h2>
+
+            <pre
+                id="tool-output"
+                role="status"
+                aria-live="polite"
+            >اختر أداة لعرض نتائجها.</pre>
+        </section>
+    </main>
+
+    <script
+        src="{{ url_for('static', filename='app.js') }}"
+        defer
+    ></script>
+</body>
+</html>
